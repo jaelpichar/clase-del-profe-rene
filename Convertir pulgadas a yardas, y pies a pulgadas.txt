@@ -1,0 +1,27 @@
+section .data
+    inches db 36  ; Por ejemplo, 36 pulgadas
+    msg db "Yardas: ", 0
+    msg2 db "Pulgadas: ", 0
+
+section .bss
+    yards resb 4
+    feet resb 4
+
+section .text
+    global _start
+
+_start:
+    ; Convertir pulgadas a yardas
+    mov eax, [inches]
+    div byte 36
+    mov [yards], eax
+
+    ; Convertir pies a pulgadas
+    mov eax, [yards]
+    mul byte 12
+    mov [feet], eax
+
+    ; Aquí imprimirías yards y feet similar a los programas anteriores
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
