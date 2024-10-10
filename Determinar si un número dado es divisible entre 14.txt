@@ -1,0 +1,28 @@
+section .data
+    num db 28 ; Ejemplo de número
+    msg db "Es divisible entre 14", 0
+
+section .bss
+
+section .text
+    global _start
+
+_start:
+    mov eax, [num]
+    cdq
+    mov ebx, 14
+    div ebx
+    cmp edx, 0
+    jne not_divisible
+
+    ; Imprimir mensaje de divisible
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 22
+    int 0x80
+
+    not_divisible:
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
