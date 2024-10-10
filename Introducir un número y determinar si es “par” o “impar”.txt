@@ -1,0 +1,37 @@
+section .data
+    msg_even db "Es par", 0
+    msg_odd db "Es impar", 0
+
+section .bss
+    num resb 1
+
+section .text
+    global _start
+
+_start:
+    ; Aquí normalmente introducirías el número
+    mov al, 5 ; Ejemplo
+    mov [num], al
+
+    ; Determinar par o impar
+    test al, 1
+    jz is_even
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_odd
+    mov edx, 8
+    int 0x80
+
+    jmp done
+
+    is_even:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_even
+    mov edx, 6
+    int 0x80
+
+    done:
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
