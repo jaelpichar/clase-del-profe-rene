@@ -1,0 +1,52 @@
+section .data
+    msg_even db "Es par", 0
+    msg_odd db "Es impar", 0
+    msg_num db "Numero: ", 0
+
+section .bss
+    nums resb 25
+
+section .text
+    global _start
+
+_start:
+    ; Aquí normalmente introducirías los 25 números
+    mov ecx, 0
+
+loop_start:
+    ; Aquí usarías una rutina para introducir cada número
+    ; mov al, [nums + ecx]
+
+    ; Determinar par o impar
+    test al, 1
+    jz is_even
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_odd
+    mov edx, 8
+    int 0x80
+
+    jmp print_num
+
+    is_even:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_even
+    mov edx, 6
+    int 0x80
+
+    print_num:
+    ; Imprimir el número (aquí simplificado)
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_num
+    mov edx, 8
+    int 0x80
+
+    add ecx, 1
+    cmp ecx, 25
+    jl loop_start
+
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
